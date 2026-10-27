@@ -5,10 +5,6 @@ import { site, projectTypes, timelines } from "@/lib/site";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-// Free key from https://web3forms.com — set NEXT_PUBLIC_WEB3FORMS_KEY in Vercel.
-// The key is designed to be public: it can only send mail to the inbox it was created for.
-const FORM_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-
 const field =
   "mt-1.5 w-full rounded-xl border border-line bg-card px-4 py-3 text-[15px] text-ink placeholder:text-muted/70 outline-none transition-colors focus:border-brand focus:ring-4 focus:ring-brand/15";
 
@@ -35,34 +31,25 @@ export default function ContactForm() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail("Please enter a valid email address.");
     if (message.length < 10) return fail("Please tell us a little more about the project.");
 
-    if (!FORM_KEY) {
-      // Site owner hasn't added the form key yet: say so honestly instead of failing silently.
-      return fail(`Our form is being set up. Please email us at ${site.email}, or`);
-    }
-
     setError("");
     setStatus("sending");
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: FORM_KEY,
-          subject: `New project enquiry from ${name}`,
-          from_name: `${site.name} website`,
-          replyto: email,
           name,
           email,
-          company: (data.company || "").trim() || "-",
-          phone: (data.phone || "").trim() || "-",
-          project_type: type,
+          company: (data.company || "").trim(),
+          phone: (data.phone || "").trim(),
+          projectType: type,
           timeline: timeline || "Not specified",
           message,
           botcheck: "",
         }),
       });
       const json = await res.json().catch(() => ({}));
-      if (res.ok && json.success) {
+      if (res.ok && json.ok) {
         setStatus("sent");
         form.reset();
         setTimeline("");

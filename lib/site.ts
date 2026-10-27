@@ -22,9 +22,9 @@ export const site = {
 
   email: "info@vynquora.com",          // enquiries, proposals, contact form
   partnerEmail: "team@vynquora.com",   // partnerships & vendor onboarding
-  phone: "+91 84272 59874",
+  phone: "+91 97416 99033",
   // WhatsApp number: country code + number, digits only
-  whatsapp: "918427259874",
+  whatsapp: "919741699033",
   hours: "Mon to Sat, 10am to 7pm IST",
 
   address: {

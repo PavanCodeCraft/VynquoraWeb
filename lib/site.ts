@@ -114,6 +114,15 @@ export type Project = {
   gallery?: { src: string; alt: string }[]; // extra screenshots for the detail page
   liveUrl?: string;        // leave "" if the project isn't public
   featured?: boolean;      // true = also shown on the homepage (first 3)
+  story?: Story;           // Problem -> Solution -> Result block on the detail page
+};
+
+export type StoryStep = { title: string; points: string[] };
+export type Story = {
+  problem: StoryStep;
+  solution: StoryStep;
+  result: StoryStep;
+  stats?: { value: string; label: string }[]; // optional big numbers, only add real ones
 };
 
 // ─── HOW TO ADD A PROJECT ───────────────────────────────────
@@ -144,6 +153,11 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://society-os-fronted.vercel.app",
     featured: true,
+    story: {
+      problem: { title: "Managing a society by hand was a mess", points: ["Maintenance was collected over WhatsApp and dues were hard to track", "Visitors were written in paper registers", "No clear record of who lives in each flat, who joined and who left"] },
+      solution: { title: "One platform for the whole society", points: ["Automatic invoices with UPI payment and PDF receipts", "QR visitor passes and a digital gate log for guards", "Every flat, resident and tenant recorded in one place"] },
+      result: { title: "The society now runs without manual work", points: ["Full record of every flat: who lives there, who joined, who left", "Dues, visitors and notices tracked automatically", "No extra staff needed to manage day-to-day work"] },
+    },
   },
   {
     slug: "kriti",
@@ -167,6 +181,11 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://kriti-ai-web-kappa.vercel.app",
     featured: true,
+    story: {
+      problem: { title: "Students got stuck with no one to ask", points: ["Study doubts stayed unsolved", "Generic chatbots give long, off-topic answers", "Time was wasted reading things nobody asked for"] },
+      solution: { title: "A focused AI assistant for students", points: ["Answers exactly what was asked, nothing extra", "Remembers the chat, so follow-up questions work", "Also explains topics and creates images"] },
+      result: { title: "Quick, useful answers any time", points: ["Students can solve study problems on their own", "Less time wasted, more time learning", "Live product with saved chats and credit plans"] },
+    },
   },
   {
     slug: "data-verification",
@@ -189,6 +208,15 @@ export const projects: Project[] = [
     ],
     liveUrl: "", // internal tool: demo on request
     featured: true,
+    story: {
+      problem: { title: "Too much data, too much checking by hand", points: ["Thousands of records arrived every day", "Bad data was mixed in with good data", "People spent hours checking each record"] },
+      solution: { title: "Automatic checks first, people second", points: ["The system checks every record against the quality rules", "Bad data is rejected, good data is passed on", "Only borderline cases go to a person"] },
+      result: { title: "Better data, with far less effort", points: ["The team works only on clean, good-quality data", "Production went up and manual work came down", "Daily reports and activity logs for the admin"] },
+      // stats: [
+      //   { value: "2x", label: "Higher production" },
+      //   { value: "2x", label: "Less manpower needed" },
+      // ],
+    },
   },
   {
     slug: "depms",
@@ -212,6 +240,14 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://depms.vercel.app",
     featured: false,
+    story: {
+      problem: { title: "Running data entry needed a whole team", points: ["2 to 3 people were needed just to manage the process", "Targets and progress were tracked in Excel", "Hard to see who finished how much, and what is pending"] },
+      solution: { title: "One dashboard for the whole department", points: ["Assign data and daily targets to each employee", "Track work done, work pending and monthly targets", "Team-wise and person-wise progress in one place"] },
+      result: { title: "One person can now run it all", points: ["The admin manages the full department alone", "Live view of daily and monthly target progress", "No extra time spent chasing people for updates"] },
+      stats: [
+        // { value: "4-5 to 1", label: "People needed to manage the process" },
+      ],
+    },
   },
   {
     slug: "mini-store",
@@ -231,6 +267,11 @@ export const projects: Project[] = [
     imageAlt: "Mini Store home page with featured products",
     liveUrl: "https://ecommerce-platform-nu-dun.vercel.app",
     featured: false,
+    story: {
+      problem: { title: "Clients find it hard to picture an online store", points: ["E-commerce is hard to explain in words", "Clients want to see a real shopping flow first"] },
+      solution: { title: "A ready demo store they can try", points: ["Full journey: browse, cart and checkout", "Clean design that works on mobile", "Easy to brand for any shop"] },
+      result: { title: "Clients see it before they decide", points: ["A clear idea of what their own store could look like", "Faster talks about requirements", "A custom store designed around their needs"] },
+    },
   },
   // {
   //   slug: "new-project",

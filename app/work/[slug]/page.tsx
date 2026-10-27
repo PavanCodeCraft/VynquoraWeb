@@ -95,6 +95,60 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           )}
         </section>
 
+        {p.story && (
+          <section className="border-t border-line bg-bg-alt">
+            <div className="mx-auto max-w-6xl px-5 sm:px-8 2xl:max-w-7xl py-20 sm:py-24">
+              <p className="text-sm font-medium text-brand">The story</p>
+              <h2 className="mt-2 text-3xl sm:text-4xl font-semibold tracking-[-0.035em]">From problem to result</h2>
+
+              <div className="mt-12 grid gap-6 lg:grid-cols-3">
+                {([
+                  { label: "The problem", step: p.story.problem, icon: "close" },
+                  { label: "What we did", step: p.story.solution, icon: "app" },
+                  { label: "The result", step: p.story.result, icon: "check" },
+                ] as const).map((c, i) => {
+                  const IconEl = Icon[c.icon];
+                  const isResult = c.label === "The result";
+                  return (
+                    <div
+                      key={c.label}
+                      className={`relative rounded-3xl border p-7 ${isResult ? "border-brand bg-brand-soft" : "border-line bg-card"}`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${isResult ? "bg-brand text-brand-ink" : "bg-bg-alt text-brand"}`}>
+                          <IconEl className="h-5 w-5" />
+                        </span>
+                        <span className="text-sm text-muted">Step {i + 1}</span>
+                      </div>
+                      <p className="mt-6 text-sm font-medium uppercase tracking-wider text-muted">{c.label}</p>
+                      <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em]">{c.step.title}</h3>
+                      <ul className="mt-5 space-y-3">
+                        {c.step.points.map((pt) => (
+                          <li key={pt} className="flex gap-3 text-[0.97rem]">
+                            <Icon.check className={`mt-1.5 h-4 w-4 shrink-0 ${isResult ? "text-brand" : "text-silver"}`} />
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {p.story.stats && p.story.stats.length > 0 && (
+                <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {p.story.stats.map((s) => (
+                    <div key={s.label} className="rounded-3xl border border-line bg-card p-7">
+                      <p className="text-5xl font-semibold tracking-[-0.04em] text-brand">{s.value}</p>
+                      <p className="mt-2 text-muted">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {projects.length > 1 && next.slug !== p.slug && (
           <section className="border-t border-line">
             <Link href={`/work/${next.slug}`} className="group mx-auto flex max-w-6xl 2xl:max-w-7xl items-center justify-between gap-6 px-5 sm:px-8 py-14">
